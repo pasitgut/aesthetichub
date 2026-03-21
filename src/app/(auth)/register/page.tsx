@@ -27,32 +27,32 @@ export default function RegisterPage() {
           </h1>
 
           <form className="space-y-4">
-            {/* Field 1: Full Name */}
+            {/* Field 1: First Name */}
             <div>
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder="First Name"
                 className="w-full px-4 py-2.5 rounded-md border border-gray-300/80 focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-gray-700 shadow-sm transition-all placeholder:font-serif placeholder:text-gray-400"
                 required
               />
             </div>
 
-            {/* Field 2: Email */}
+            {/* Field 2: Last Name */}
+            <div>
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="w-full px-4 py-2.5 rounded-md border border-gray-300/80 focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-gray-700 shadow-sm transition-all placeholder:font-serif placeholder:text-gray-400"
+              />
+            </div>
+
+            {/* Field 3: Email */}
             <div>
               <input
                 type="email"
                 placeholder="Email Address"
                 className="w-full px-4 py-2.5 rounded-md border border-gray-300/80 focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-gray-700 shadow-sm transition-all placeholder:font-serif placeholder:text-gray-400"
                 required
-              />
-            </div>
-
-            {/* Field 3: Phone / Username */}
-            <div>
-              <input
-                type="tel"
-                placeholder="Phone Number"
-                className="w-full px-4 py-2.5 rounded-md border border-gray-300/80 focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-gray-700 shadow-sm transition-all placeholder:font-serif placeholder:text-gray-400"
               />
             </div>
 

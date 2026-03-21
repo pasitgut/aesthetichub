@@ -1,7 +1,8 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 // --- Mock Data ---
-const treatments = [
+const allTreatments = [
   {
     id: "t1",
     name: "Botox + Peel",
@@ -9,14 +10,14 @@ const treatments = [
     price: "$650",
     duration: "75 min",
     score: 95,
-    scoreColor: "bg-[#22c55e]", // Green
+    scoreColor: "bg-[#22c55e]",
     textColor: "text-[#22c55e]",
     rating: 4.9,
     reviews: 156,
     downtime: "1-2 days",
     results: "3-6 months",
     risk: "Low",
-    riskClass: "bg-[#dcfce7] text-[#166534]", // Green Badge
+    riskClass: "bg-[#dcfce7] text-[#166534]",
     bestFor: "Fine lines, texture",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -31,14 +32,14 @@ const treatments = [
     price: "$850",
     duration: "90 min",
     score: 88,
-    scoreColor: "bg-[#eab308]", // Yellow
+    scoreColor: "bg-[#eab308]",
     textColor: "text-[#eab308]",
     rating: 4.8,
     reviews: 98,
     downtime: "3-5 days",
     results: "6-12 months",
     risk: "Medium",
-    riskClass: "bg-[#fef3c7] text-[#b45309]", // Yellow Badge
+    riskClass: "bg-[#fef3c7] text-[#b45309]",
     bestFor: "Collagen boost",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -53,14 +54,14 @@ const treatments = [
     price: "$1,200",
     duration: "60 min",
     score: 82,
-    scoreColor: "bg-[#f97316]", // Orange
+    scoreColor: "bg-[#f97316]",
     textColor: "text-[#f97316]",
     rating: 4.7,
     reviews: 73,
     downtime: "7-10 days",
     results: "12-24 months",
     risk: "Medium",
-    riskClass: "bg-[#ffedd5] text-[#c2410c]", // Orange Badge
+    riskClass: "bg-[#ffedd5] text-[#c2410c]",
     bestFor: "Deep rejuvenation",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -68,11 +69,66 @@ const treatments = [
       </svg>
     ),
   },
+  {
+    id: "t4",
+    name: "Chemical Peel",
+    clinic: "Clear Skin Clinic",
+    price: "$350",
+    duration: "45 min",
+    score: 75,
+    scoreColor: "bg-[#3b82f6]",
+    textColor: "text-[#3b82f6]",
+    rating: 4.5,
+    reviews: 210,
+    downtime: "2-7 days",
+    results: "1-3 months",
+    risk: "Low",
+    riskClass: "bg-[#dbeafe] text-[#1e40af]",
+    bestFor: "Acne, pigmentation",
+    icon: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+        />
+      </svg>
+    ),
+  },
 ];
 
 export default function ComparePage() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>(["t1", "t2", "t3"]);
+
+  const treatmentsToCompare = allTreatments.filter((t) =>
+    selectedIds.includes(t.id),
+  );
+
+  const toggleTreatment = (id: string) => {
+    if (selectedIds.includes(id)) {
+      if (selectedIds.length > 1) {
+        setSelectedIds(selectedIds.filter((itemId) => itemId !== id));
+      } else {
+        alert("Please select at least one treatment.");
+      }
+    } else {
+      if (selectedIds.length < 4) {
+        setSelectedIds([...selectedIds, id]);
+      } else {
+        alert("You can compare up to 4 treatments at a time.");
+      }
+    }
+  };
+
+  const gridStyle = {
+    display: "grid",
+    gridTemplateColumns: `180px repeat(${treatmentsToCompare.length}, minmax(200px, 1fr))`,
+  };
+
   return (
-    <div className="min-h-screen bg-white py-10 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-white py-10 px-4 sm:px-6 lg:px-8 font-sans relative">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -84,27 +140,50 @@ export default function ComparePage() {
               compare treatments side by side to make the best decision
             </p>
           </div>
-          <button className="bg-[#f5ced2] hover:bg-[#ebb8bd] text-white px-8 py-2.5 rounded-2xl font-serif text-lg transition-colors shadow-sm shadow-pink-100 self-start md:self-auto">
-            Edit
+          <button
+            onClick={() => setIsEditing(true)}
+            className="bg-[#f5ced2] hover:bg-[#ebb8bd] text-gray-900 px-8 py-2.5 rounded-2xl font-serif text-lg transition-colors shadow-sm shadow-pink-100 self-start md:self-auto"
+          >
+            Edit List
           </button>
         </div>
 
-        {/* Comparison Table Container 
-            ใช้ overflow-x-auto คู่กับ min-w-[900px] เพื่อให้เลื่อนซ้ายขวาได้บนมือถือโดยที่สัดส่วนไม่พัง
-        */}
+        {/* Comparison Table Container */}
         <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100/80 overflow-hidden mb-12">
           <div className="overflow-x-auto">
-            <div className="min-w-[900px] grid grid-cols-4 w-full">
-              {/* === Row 1: Header (Features & Clinic Names) === */}
-              <div className="col-span-4 grid grid-cols-4 bg-[#faf8f6] border-b border-gray-100">
-                <div className="p-6 md:p-8 flex items-center font-bold text-gray-700 font-serif text-lg">
+            <div className="min-w-[800px] w-full">
+              {/* === Row 1: Header === */}
+              <div
+                style={gridStyle}
+                className="bg-[#faf8f6] border-b border-gray-100"
+              >
+                <div className="p-6 md:p-8 flex items-center font-bold text-gray-700 font-serif text-lg sticky left-0 bg-[#faf8f6] z-10">
                   Feature
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`header-${t.id}`}
-                    className="p-6 md:p-8 flex flex-col items-center justify-center text-center"
+                    className="p-6 md:p-8 flex flex-col items-center justify-center text-center relative"
                   >
+                    <button
+                      onClick={() => toggleTreatment(t.id)}
+                      className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
+                      title="Remove"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        ></path>
+                      </svg>
+                    </button>
                     <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-[#dcb5b9] mb-3">
                       {t.icon}
                     </div>
@@ -119,11 +198,14 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 2: Price === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   Price
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`price-${t.id}`}
                     className="p-6 flex items-center justify-center font-bold text-2xl text-[#1e293b]"
@@ -134,11 +216,14 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 3: Duration === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   Duration
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`duration-${t.id}`}
                     className="p-6 flex items-center justify-center text-gray-600"
@@ -149,23 +234,24 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 4: Suitability Score === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   Suitability Score
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`score-${t.id}`}
                     className="p-6 flex items-center justify-center gap-3"
                   >
-                    {/* Progress Bar Container */}
                     <div className="w-20 md:w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${t.scoreColor}`}
                         style={{ width: `${t.score}%` }}
                       ></div>
                     </div>
-                    {/* Percentage Text */}
                     <span className={`font-bold ${t.textColor}`}>
                       {t.score}%
                     </span>
@@ -174,11 +260,14 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 5: User Rating === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   User Rating
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`rating-${t.id}`}
                     className="p-6 flex items-center justify-center gap-1.5"
@@ -197,11 +286,14 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 6: Downtime === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   Downtime
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`downtime-${t.id}`}
                     className="p-6 flex items-center justify-center text-gray-600"
@@ -212,11 +304,14 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 7: Results Duration === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   Results Duration
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`results-${t.id}`}
                     className="p-6 flex items-center justify-center text-gray-600"
@@ -227,11 +322,14 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 8: Risk Level === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   Risk Level
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`risk-${t.id}`}
                     className="p-6 flex items-center justify-center"
@@ -246,11 +344,14 @@ export default function ComparePage() {
               </div>
 
               {/* === Row 9: Best For === */}
-              <div className="col-span-4 grid grid-cols-4 border-b border-gray-100 bg-white">
-                <div className="p-6 flex items-center font-medium text-gray-600">
+              <div
+                style={gridStyle}
+                className="border-b border-gray-100 bg-white hover:bg-gray-50/50 transition-colors"
+              >
+                <div className="p-6 flex items-center font-medium text-gray-600 sticky left-0 bg-white">
                   Best For
                 </div>
-                {treatments.map((t) => (
+                {treatmentsToCompare.map((t) => (
                   <div
                     key={`bestfor-${t.id}`}
                     className="p-6 flex items-center justify-center text-gray-600 text-center"
@@ -260,12 +361,100 @@ export default function ComparePage() {
                 ))}
               </div>
 
-              {/* === Row 10: Footer Decorator (แถบสีครีมด้านล่างสุด) === */}
-              <div className="col-span-4 h-12 bg-[#faf8f6]"></div>
+              {/* === Row 10: Footer Decorator === */}
+              <div className="w-full h-12 bg-[#faf8f6]"></div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* ================= EDIT MODAL ================= */}
+      {isEditing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden">
+            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+              <h2 className="text-xl font-bold font-serif text-gray-900">
+                Select Treatments
+              </h2>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="text-gray-400 hover:text-gray-600 p-2"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+
+            <div className="p-6 max-h-[60vh] overflow-y-auto space-y-3">
+              {allTreatments.map((t) => {
+                const isSelected = selectedIds.includes(t.id);
+                return (
+                  // แก้ไขตรงนี้: เปลี่ยนจาก <label> เป็น <div> และเพิ่ม onClick
+                  <div
+                    key={`modal-${t.id}`}
+                    onClick={() => toggleTreatment(t.id)}
+                    className={`flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-colors ${
+                      isSelected
+                        ? "border-[#f1c3c9] bg-[#fdf4f5]"
+                        : "border-gray-100 hover:border-gray-200"
+                    }`}
+                  >
+                    <div className="flex items-center gap-4 w-full">
+                      <div
+                        className={`w-6 h-6 rounded flex items-center justify-center border shrink-0 ${isSelected ? "bg-[#f1c3c9] border-[#f1c3c9]" : "border-gray-300 bg-white"}`}
+                      >
+                        {isSelected && (
+                          <svg
+                            className="w-4 h-4 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="3"
+                              d="M5 13l4 4L19 7"
+                            ></path>
+                          </svg>
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-bold text-gray-900 select-none">
+                          {t.name}
+                        </p>
+                        <p className="text-sm text-gray-500 select-none">
+                          {t.clinic} • {t.price}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="p-6 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+              <button
+                onClick={() => setIsEditing(false)}
+                className="px-6 py-2.5 rounded-xl font-medium bg-black text-white hover:bg-gray-800 transition-colors shadow-sm"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

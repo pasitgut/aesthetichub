@@ -205,9 +205,12 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <button className="mt-auto w-full bg-[#f1c3c9] hover:bg-[#e4b2b8] text-white py-2.5 rounded-lg font-serif transition-colors">
+                <Link
+                  href={`/clinic/${clinic.id}`}
+                  className="mt-auto w-full bg-[#fdf4f5] hover:bg-[#f1c3c9] text-[#dcb5b9] hover:text-white border border-[#f1c3c9]/30 text-center py-2.5 rounded-xl font-serif font-medium transition-all duration-300"
+                >
                   View Details
-                </button>
+                </Link>
               </div>
             </div>
           ))}

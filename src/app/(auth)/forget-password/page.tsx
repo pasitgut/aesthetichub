@@ -5,10 +5,8 @@ export default function ForgetPasswordPage() {
   return (
     // Background Gradient สีชมพูอ่อน คลุมเต็มหน้าจอ
     <div className="min-h-screen bg-gradient-to-br from-[#fdf6f7] to-[#fceced] flex items-center justify-center p-4 sm:p-8">
-      
       {/* Main Card Container */}
       <div className="bg-white rounded-xl shadow-2xl shadow-pink-200/40 w-full max-w-4xl flex flex-col md:flex-row overflow-hidden">
-        
         {/* Left Column: Image Area */}
         <div className="relative w-full h-[250px] md:h-auto md:w-1/2">
           <Image
@@ -22,15 +20,15 @@ export default function ForgetPasswordPage() {
 
         {/* Right Column: Forget Password Form */}
         <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-          
           {/* Header */}
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif text-center mb-4 tracking-wide text-black uppercase">
             Forget Password
           </h1>
-          
+
           {/* Subtitle / Instructions */}
           <p className="text-center text-gray-500 font-serif mb-8 text-sm md:text-base px-2">
-            Enter your email address and we&apos;ll send you a link to reset your password.
+            Enter your email address and we&apos;ll send you a link to reset
+            your password.
           </p>
 
           <form className="space-y-5">
@@ -57,15 +55,28 @@ export default function ForgetPasswordPage() {
           <div className="mt-8">
             <hr className="border-gray-300 mb-6 border-t-[1.5px]" />
             <div className="flex justify-center items-center text-sm md:text-base font-serif text-gray-500">
-              <Link href="/login" className="hover:text-black transition-colors flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+              <Link
+                href="/login"
+                className="hover:text-black transition-colors flex items-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
                 </svg>
                 Back to Sign in
               </Link>
             </div>
           </div>
-
         </div>
       </div>
     </div>

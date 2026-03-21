@@ -51,13 +51,11 @@ export default function ProfilePage() {
     // Background สีครีม/เทาอ่อน เหมือนในภาพต้นฉบับ
     <div className="min-h-screen bg-[#f8f7f5] py-10 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
-        
         {/* =========================================
             LEFT COLUMN (History & Saved Clinics) 
             บน Mobile จะถูกดันลงไปอยู่ด้านล่าง (order-2)
             ========================================= */}
         <div className="w-full lg:w-2/3 order-2 lg:order-1 space-y-8">
-          
           {/* Section: Assessment History */}
           <section className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100/50">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 font-serif tracking-wide">
@@ -65,13 +63,19 @@ export default function ProfilePage() {
             </h2>
             <div className="space-y-6">
               {assessmentHistory.map((item) => (
-                <div key={item.id} className="border border-gray-100 rounded-xl p-5 hover:shadow-md transition-shadow bg-white">
-                  
+                <div
+                  key={item.id}
+                  className="border border-gray-100 rounded-xl p-5 hover:shadow-md transition-shadow bg-white"
+                >
                   {/* Title & Badge */}
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
                     <div>
-                      <h3 className="font-bold text-lg text-gray-900">{item.title}</h3>
-                      <p className="text-sm text-gray-500 mt-1">Completed on {item.date}</p>
+                      <h3 className="font-bold text-lg text-gray-900">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Completed on {item.date}
+                      </p>
                     </div>
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#e6fcf0] text-[#1e884e]">
                       {item.status}
@@ -80,9 +84,15 @@ export default function ProfilePage() {
 
                   {/* Details */}
                   <div className="text-sm text-gray-600 mb-5 mt-4">
-                    <span className="font-medium text-gray-700">Primary concerns:</span> {item.concerns}
+                    <span className="font-medium text-gray-700">
+                      Primary concerns:
+                    </span>{" "}
+                    {item.concerns}
                     <span className="mx-2 text-gray-300">|</span>
-                    <span className="font-medium text-gray-700">Skin type:</span> {item.skinType}
+                    <span className="font-medium text-gray-700">
+                      Skin type:
+                    </span>{" "}
+                    {item.skinType}
                   </div>
 
                   {/* Actions */}
@@ -91,8 +101,18 @@ export default function ProfilePage() {
                       View Results
                     </button>
                     <button className="p-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors shadow-sm">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -108,8 +128,10 @@ export default function ProfilePage() {
             </h2>
             <div className="space-y-4">
               {savedClinics.map((clinic) => (
-                <div key={clinic.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-gray-100 rounded-xl hover:shadow-md transition-shadow bg-white gap-4">
-                  
+                <div
+                  key={clinic.id}
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-gray-100 rounded-xl hover:shadow-md transition-shadow bg-white gap-4"
+                >
                   {/* Icon & Info */}
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-[#fdf4f5] text-[#f1c3c9] flex items-center justify-center shrink-0">
@@ -117,9 +139,15 @@ export default function ProfilePage() {
                     </div>
                     <div>
                       <h3 className="font-bold text-gray-900">{clinic.name}</h3>
-                      <p className="text-sm text-gray-500 mb-1">{clinic.location}</p>
+                      <p className="text-sm text-gray-500 mb-1">
+                        {clinic.location}
+                      </p>
                       <div className="flex items-center text-sm font-medium text-gray-700">
-                        <svg className="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <svg
+                          className="w-4 h-4 text-yellow-400 mr-1"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                         {clinic.rating}
@@ -135,7 +163,6 @@ export default function ProfilePage() {
               ))}
             </div>
           </section>
-
         </div>
 
         {/* =========================================
@@ -143,7 +170,6 @@ export default function ProfilePage() {
             บน Mobile จะถูกดันขึ้นมาอยู่บนสุด (order-1)
             ========================================= */}
         <div className="w-full lg:w-1/3 order-1 lg:order-2 space-y-6">
-          
           {/* Profile Card */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100/50 flex flex-col items-center text-center">
             <div className="relative w-20 h-20 mb-4">
@@ -156,10 +182,20 @@ export default function ProfilePage() {
             </div>
             <h2 className="text-xl font-bold text-gray-900">Sarah Mitchell</h2>
             <p className="text-gray-500 text-sm mb-6">sarah.m@email.com</p>
-            
+
             <button className="w-full py-2 px-4 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 font-medium shadow-sm">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                />
               </svg>
               Edit Profile
             </button>
@@ -167,30 +203,61 @@ export default function ProfilePage() {
 
           {/* Quick Actions */}
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-4 font-serif">Quick Actions</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-4 font-serif">
+              Quick Actions
+            </h3>
             <div className="space-y-3">
               {/* New Assessment Button */}
-              <Link href="#" className="flex items-center gap-3 w-full p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all text-left group">
+              <Link
+                href="#"
+                className="flex items-center gap-3 w-full p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all text-left group"
+              >
                 <div className="text-[#e8aeb2] bg-[#fdf4f5] p-2 rounded-lg group-hover:bg-[#f1c3c9] group-hover:text-white transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                    />
                   </svg>
                 </div>
-                <span className="font-medium text-gray-700">New Assessment</span>
+                <span className="font-medium text-gray-700">
+                  New Assessment
+                </span>
               </Link>
 
               {/* Browse Clinics Button */}
-              <Link href="#" className="flex items-center gap-3 w-full p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all text-left group">
+              <Link
+                href="#"
+                className="flex items-center gap-3 w-full p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all text-left group"
+              >
                 <div className="text-[#e8aeb2] bg-[#fdf4f5] p-2 rounded-lg group-hover:bg-[#f1c3c9] group-hover:text-white transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
                   </svg>
                 </div>
-                <span className="font-medium text-gray-700">Browse Clinics</span>
+                <span className="font-medium text-gray-700">
+                  Browse Clinics
+                </span>
               </Link>
             </div>
           </div>
-
         </div>
       </div>
     </div>

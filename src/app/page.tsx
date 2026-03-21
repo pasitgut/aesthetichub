@@ -51,9 +51,12 @@ export default function HomePage() {
                 unique skin concerns.
               </p>
 
-              <button className="bg-black hover:bg-gray-800 text-white font-serif px-8 py-3.5 rounded-full text-lg transition shadow-lg">
+              <Link
+                href={"/assessment"}
+                className="bg-black hover:bg-gray-800 text-white font-serif px-8 py-3.5 rounded-full text-lg transition shadow-lg"
+              >
                 Start Assessment
-              </button>
+              </Link>
 
               {/* Stats */}
               <div className="flex items-center justify-center lg:justify-start gap-8 mt-10">

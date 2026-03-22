@@ -1,100 +1,50 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { api } from "@/lib/api";
 
-// --- Mock Data ---
-const allTreatments = [
-  {
-    id: "t1",
-    name: "Advanced Botox Treatment",
-    clinic: "Radiant Skin Clinic",
-    price: "$450",
-    duration: "30-45 min",
-    rating: 4.9,
-    reviews: 89,
-    tags: ["Anti-Aging", "Face"],
-    image:
-      "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "t2",
-    name: "Dermal Filler Package",
-    clinic: "Glow Medical Spa",
-    price: "$650",
-    duration: "45-60 min",
-    rating: 4.8,
-    reviews: 124,
-    tags: ["Volume", "Face"],
-    image:
-      "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "t3",
-    name: "Laser Hair Removal",
-    clinic: "Elite Aesthetics",
-    price: "$150",
-    duration: "30 min",
-    rating: 4.7,
-    reviews: 312,
-    tags: ["Laser", "Body"],
-    image:
-      "https://images.unsplash.com/photo-1534644107580-3a4dbd494a95?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "t4",
-    name: "Signature HydraFacial",
-    clinic: "Lumina Beauty Hub",
-    price: "$199",
-    duration: "60 min",
-    rating: 5.0,
-    reviews: 205,
-    tags: ["Skincare", "Glow"],
-    image:
-      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "t5",
-    name: "Chemical Peel - Glycolic",
-    clinic: "DermaCare Center",
-    price: "$250",
-    duration: "30 min",
-    rating: 4.6,
-    reviews: 87,
-    tags: ["Peel", "Acne"],
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "t6",
-    name: "Microneedling Therapy",
-    clinic: "Aura Wellness Clinic",
-    price: "$350",
-    duration: "45 min",
-    rating: 4.8,
-    reviews: 156,
-    tags: ["Texture", "Scars"],
-    image:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=800&auto=format&fit=crop",
-  },
-];
+interface Treatment {
+  id: string;
+  name: string;
+  clinic_name: string;
+  clinic_id: string;
+  price: number;
+  duration: string;
+  rating: number;
+  review_count: number;
+  tags: string[];
+  image_url: string;
+}
 
 export default function TreatmentsDirectoryPage() {
+  const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  // ฟังก์ชันกรองทรีตเมนต์ตามคำค้นหา (ค้นหาจากชื่อ หรือ คลินิก)
-  const filteredTreatments = allTreatments.filter((t) => {
-    const searchLower = searchTerm.toLowerCase();
-    return (
-      t.name.toLowerCase().includes(searchLower) ||
-      t.clinic.toLowerCase().includes(searchLower)
-    );
-  });
+  const fetchTreatments = useCallback(async () => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (searchTerm) params.set("search", searchTerm);
+    params.set("limit", "12");
+
+    const res = await api.get<Treatment[]>(`/api/v1/treatments?${params.toString()}`);
+    if (res.success && res.data) {
+      setTreatments(res.data);
+      setTotal(res.meta?.total || res.data.length);
+    }
+    setLoading(false);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const debounce = setTimeout(fetchTreatments, 300);
+    return () => clearTimeout(debounce);
+  }, [fetchTreatments]);
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800">
-      {/* 1. Page Header / Banner */}
       <div className="bg-[#faf8f6] py-16 px-6 border-b border-gray-100">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold font-serif text-gray-900 mb-4">
@@ -109,9 +59,7 @@ export default function TreatmentsDirectoryPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* 2. Search & Filter Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-          {/* Search Input */}
           <div className="relative w-full md:w-1/2 lg:w-1/3">
             <input
               type="text"
@@ -120,159 +68,92 @@ export default function TreatmentsDirectoryPage() {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent font-serif text-gray-700 transition-all bg-gray-50/50"
             />
-            <svg
-              className="w-5 h-5 absolute left-4 top-3.5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
+            <svg className="w-5 h-5 absolute left-4 top-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-
-          {/* Dropdown Filters (Visual Only) */}
-          <div className="flex w-full md:w-auto gap-3">
-            <select className="flex-1 md:w-40 px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] font-serif text-gray-600 appearance-none cursor-pointer">
-              <option value="">Category</option>
-              <option value="face">Face & Skin</option>
-              <option value="body">Body Contouring</option>
-              <option value="injectables">Injectables</option>
-            </select>
-            <select className="flex-1 md:w-40 px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] font-serif text-gray-600 appearance-none cursor-pointer">
-              <option value="">Price Range</option>
-              <option value="under500">Under $500</option>
-              <option value="500to1000">$500 - $1000</option>
-              <option value="over1000">Over $1000</option>
-            </select>
-          </div>
         </div>
 
-        {/* 3. Results Count */}
         <div className="mb-6 text-gray-500 font-medium text-sm">
-          Showing{" "}
-          <span className="text-gray-900 font-bold">
-            {filteredTreatments.length}
-          </span>{" "}
-          treatments
+          Showing <span className="text-gray-900 font-bold">{total}</span> treatments
         </div>
 
-        {/* 4. Treatments Grid */}
-        {filteredTreatments.length > 0 ? (
+        {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredTreatments.map((treatment) => (
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+                <div className="h-52 bg-gray-200" />
+                <div className="p-6 space-y-3">
+                  <div className="h-5 bg-gray-200 rounded w-3/4" />
+                  <div className="h-4 bg-gray-200 rounded w-1/2" />
+                  <div className="h-10 bg-gray-200 rounded-xl mt-4" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : treatments.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {treatments.map((treatment) => (
               <div
                 key={treatment.id}
                 className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
               >
-                {/* Card Image */}
                 <div className="relative h-52 w-full overflow-hidden">
-                  <Image
-                    src={treatment.image}
-                    alt={treatment.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  {/* Tags Badges overlaid on image */}
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    {treatment.tags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  {/* Quick Save Button */}
-                  <button className="absolute top-4 right-4 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-[#f1c3c9] transition-colors shadow-sm">
-                    <svg
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                    </svg>
-                  </button>
+                  {treatment.image_url ? (
+                    <Image src={treatment.image_url} alt={treatment.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-[#fdf4f5] to-[#f1c3c9] flex items-center justify-center">
+                      <span className="text-5xl">💆</span>
+                    </div>
+                  )}
+                  {treatment.tags && treatment.tags.length > 0 && (
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      {treatment.tags.slice(0, 2).map((tag, idx) => (
+                        <span key={idx} className="bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                          {typeof tag === 'string' ? tag : (tag as any).name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* Card Body */}
                 <div className="p-6 flex-1 flex flex-col">
-                  {/* Title & Clinic */}
                   <div className="mb-4">
-                    <h3 className="font-bold text-xl text-gray-900 font-serif leading-tight mb-1">
-                      {treatment.name}
-                    </h3>
-                    <Link
-                      href="#"
-                      className="text-[#dcb5b9] text-sm font-medium hover:underline flex items-center"
-                    >
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1v1H9V7zm5 0h1v1h-1V7zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1z"
-                        />
-                      </svg>
-                      {treatment.clinic}
-                    </Link>
+                    <h3 className="font-bold text-xl text-gray-900 font-serif leading-tight mb-1">{treatment.name}</h3>
+                    {treatment.clinic_name && (
+                      <Link href={treatment.clinic_id ? `/clinic/${treatment.clinic_id}` : "#"} className="text-[#dcb5b9] text-sm font-medium hover:underline flex items-center">
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1v1H9V7zm5 0h1v1h-1V7zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1z" />
+                        </svg>
+                        {treatment.clinic_name}
+                      </Link>
+                    )}
                   </div>
 
-                  {/* Details Row: Price, Duration, Rating */}
                   <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-sm text-gray-600 mb-6">
                     <div className="flex flex-col">
-                      <span className="text-xs text-gray-400 mb-0.5">
-                        Starting from
-                      </span>
-                      <span className="font-bold text-xl text-gray-900">
-                        {treatment.price}
-                      </span>
+                      <span className="text-xs text-gray-400 mb-0.5">Starting from</span>
+                      <span className="font-bold text-xl text-gray-900">฿{treatment.price?.toLocaleString()}</span>
                     </div>
                     <div className="flex flex-col justify-end">
                       <div className="flex items-center gap-1.5 text-yellow-400">
-                        <svg
-                          className="w-4 h-4 fill-current"
-                          viewBox="0 0 20 20"
-                        >
+                        <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
-                        <span className="font-bold text-gray-900">
-                          {treatment.rating}
-                        </span>
-                        <span className="text-gray-400 text-xs">
-                          ({treatment.reviews})
-                        </span>
+                        <span className="font-bold text-gray-900">{treatment.rating?.toFixed(1) || "0.0"}</span>
+                        <span className="text-gray-400 text-xs">({treatment.review_count || 0})</span>
                       </div>
                     </div>
-                    <div className="flex items-center col-span-2 text-gray-500 pt-2 border-t border-gray-100">
-                      <svg
-                        className="w-4 h-4 mr-1.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {treatment.duration}
-                    </div>
+                    {treatment.duration && (
+                      <div className="flex items-center col-span-2 text-gray-500 pt-2 border-t border-gray-100">
+                        <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {treatment.duration}
+                      </div>
+                    )}
                   </div>
 
-                  {/* Card Actions */}
                   <div className="mt-auto flex gap-3">
                     <Link
                       href={`/treatment/${treatment.id}`}
@@ -280,24 +161,22 @@ export default function TreatmentsDirectoryPage() {
                     >
                       Details
                     </Link>
-                    <button className="flex-1 bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 py-2.5 rounded-xl font-serif font-medium transition-all duration-300">
+                    <Link
+                      href={`/compare?ids=${treatment.id}`}
+                      className="flex-1 bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 py-2.5 rounded-xl font-serif font-medium transition-all duration-300 text-center"
+                    >
                       Compare
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          /* Empty State */
           <div className="text-center py-20 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
             <div className="text-4xl mb-4">✨</div>
-            <h3 className="text-xl font-bold font-serif text-gray-900 mb-2">
-              No treatments found
-            </h3>
-            <p className="text-gray-500">
-              We couldn't find any treatments matching your search.
-            </p>
+            <h3 className="text-xl font-bold font-serif text-gray-900 mb-2">No treatments found</h3>
+            <p className="text-gray-500">We couldn&apos;t find any treatments matching your search.</p>
           </div>
         )}
       </div>

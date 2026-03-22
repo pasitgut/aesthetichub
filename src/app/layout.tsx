@@ -1,11 +1,12 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/context/AuthContext";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,18 +24,22 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
 
-  const disableLayoutPaths = ["/login", "/register", "/forget-password"];
+  const disableLayoutPaths = ["/login", "/register", "/forget-password", "/admin"];
 
-  const isLayoutDisabled = disableLayoutPaths.includes(pathname);
+  const isLayoutDisabled = disableLayoutPaths.some(
+    (p) => pathname === p || pathname.startsWith(p + "/")
+  );
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {!isLayoutDisabled && <Navbar />}
-        {children}
-        {!isLayoutDisabled && <Footer />}
+        <AuthProvider>
+          {!isLayoutDisabled && <Navbar />}
+          {children}
+          {!isLayoutDisabled && <Footer />}
+        </AuthProvider>
       </body>
     </html>
   );

@@ -226,11 +226,11 @@ export default function AdminTreatmentsPage() {
                 )}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Treatment Name *</label>
-                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. Premium Botox Injection" />
+                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. Premium Botox Injection" />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Overview / Description</label>
-                  <textarea rows={3} value={form.overview} onChange={(e) => setForm({ ...form, overview: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all resize-none" placeholder="Detailed explanation of the treatment..." />
+                  <textarea rows={3} value={form.overview} onChange={(e) => setForm({ ...form, overview: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all resize-none" placeholder="Detailed explanation of the treatment..." />
                 </div>
               </div>
 
@@ -241,13 +241,13 @@ export default function AdminTreatmentsPage() {
                     <label className="block text-sm font-bold text-gray-700 mb-2">Price (฿) *</label>
                     <div className="relative">
                       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">฿</span>
-                      <input type="number" value={form.price} onChange={(e) => setForm({ ...form, price: parseFloat(e.target.value) || 0 })} className="w-full pl-10 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" />
+                      <input type="number" value={form.price} onChange={(e) => setForm({ ...form, price: parseFloat(e.target.value) || 0 })} className="text-gray-900 w-full pl-10 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Duration (min) *</label>
                      <div className="relative">
-                      <input type="number" value={form.duration_minutes} onChange={(e) => setForm({ ...form, duration_minutes: parseInt(e.target.value) || 0 })} className="w-full px-4 pr-12 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" />
+                      <input type="number" value={form.duration_minutes} onChange={(e) => setForm({ ...form, duration_minutes: parseInt(e.target.value) || 0 })} className="text-gray-900 w-full px-4 pr-12 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 bg-transparent text-sm font-bold">min</span>
                     </div>
                   </div>
@@ -263,16 +263,16 @@ export default function AdminTreatmentsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Downtime</label>
-                    <input type="text" value={form.downtime_days} onChange={(e) => setForm({ ...form, downtime_days: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. 2-3 days, None" />
+                    <input type="text" value={form.downtime_days} onChange={(e) => setForm({ ...form, downtime_days: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. 2-3 days, None" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Results Duration</label>
-                    <input type="text" value={form.results_duration} onChange={(e) => setForm({ ...form, results_duration: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. 6-12 months" />
+                    <input type="text" value={form.results_duration} onChange={(e) => setForm({ ...form, results_duration: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. 6-12 months" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Best For</label>
-                  <input type="text" value={form.best_for} onChange={(e) => setForm({ ...form, best_for: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. Fine lines, wrinkles, acne scars" />
+                  <input type="text" value={form.best_for} onChange={(e) => setForm({ ...form, best_for: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. Fine lines, wrinkles, acne scars" />
                 </div>
               </div>
 
@@ -302,7 +302,7 @@ export default function AdminTreatmentsPage() {
                       <option value="BEFORE">PRE-CARE</option>
                       <option value="AFTER">POST-CARE</option>
                     </select>
-                    <input type="text" value={careText} onChange={(e) => setCareText(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addCareInstruction())} className="flex-1 px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="Instruction details..." />
+                    <input type="text" value={careText} onChange={(e) => setCareText(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addCareInstruction())} className="text-gray-900 flex-1 px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="Instruction details..." />
                     <button onClick={addCareInstruction} className="px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-xl text-sm font-bold transition-colors">Add Rule</button>
                   </div>
                   <div className="space-y-2">

@@ -141,7 +141,7 @@ export default function AdminTagsPage() {
               
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Display Name *</label>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all shadow-sm" placeholder="e.g. Sensitive Skin, Acne Scarring" />
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="text-gray-900 w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all shadow-sm" placeholder="e.g. Sensitive Skin, Acne Scarring" />
               </div>
              
               <div className="p-4 bg-white rounded-xl border border-dashed border-gray-200 flex flex-col items-center justify-center gap-3">

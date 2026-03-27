@@ -105,7 +105,7 @@ export default function AdminClinicsPage() {
         <div className="p-6 md:p-8 border-b border-gray-50 flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50/30">
           <div className="relative w-full sm:w-96">
             <svg className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            <input type="text" placeholder="Search clinics by name or area..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" />
+            <input type="text" placeholder="Search clinics by name or area..." value={search} onChange={(e) => setSearch(e.target.value)} className="text-gray-900 w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" />
           </div>
           <button onClick={openCreate} className="w-full sm:hidden bg-[#f1c3c9] hover:bg-[#e4b2b8] text-white px-6 py-3.5 rounded-2xl font-bold transition-all flex justify-center items-center gap-2">
             <span className="text-xl leading-none">+</span> Add Clinic
@@ -178,15 +178,15 @@ export default function AdminClinicsPage() {
                 <h3 className="font-bold text-gray-900 uppercase tracking-wider text-xs mb-2">Basic Info</h3>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Clinic Name *</label>
-                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="Enter clinic name" />
+                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="Enter clinic name" />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Cover Image URL</label>
-                  <input type="url" value={form.cover_image_url} onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="https://..." />
+                  <input type="url" value={form.cover_image_url} onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="https://..." />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Description</label>
-                  <textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all resize-none" placeholder="Brief description of the clinic..." />
+                  <textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all resize-none" placeholder="Brief description of the clinic..." />
                 </div>
               </div>
 
@@ -194,16 +194,16 @@ export default function AdminClinicsPage() {
                  <h3 className="font-bold text-gray-900 uppercase tracking-wider text-xs mb-2">Location & Contact</h3>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Street Address *</label>
-                  <input type="text" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="123 Example St" />
+                  <input type="text" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="123 Example St" />
                 </div>
                 <div className="grid grid-cols-2 gap-5">
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">City</label>
-                    <input type="text" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="Bangkok" />
+                    <input type="text" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="Bangkok" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Phone</label>
-                    <input type="text" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="02-123-4567" />
+                    <input type="text" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="text-gray-900 w-full px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="02-123-4567" />
                   </div>
                 </div>
               </div>
@@ -214,7 +214,7 @@ export default function AdminClinicsPage() {
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Add Feature / Highlight</label>
                     <div className="flex gap-3 mb-4">
-                      <input type="text" value={highlightInput} onChange={(e) => setHighlightInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addHighlight())} className="flex-1 px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. Board-Certified Specialists" />
+                      <input type="text" value={highlightInput} onChange={(e) => setHighlightInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addHighlight())} className="text-gray-900 flex-1 px-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f1c3c9] focus:border-transparent text-sm font-medium transition-all" placeholder="e.g. Board-Certified Specialists" />
                       <button onClick={addHighlight} className="px-6 py-3 bg-gray-900 hover:bg-black text-white rounded-xl text-sm font-bold transition-colors">Add</button>
                     </div>
                     <div className="flex flex-wrap gap-2">
